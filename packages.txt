@@ -1,3 +1,0 @@
-python3-opencv
-libgl1-mesa-dev
-ffmpeg
