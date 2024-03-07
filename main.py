@@ -15,8 +15,10 @@ WEIGHTS_LINK = (
     + "f7-e1d676e3cbfa&at=APZUnTWE8-GrHJPQWCCoK950BRrJ%3A1708105918119"
 )
 WEIGHTS_NAME = "wav2lip_gan.pth"
-AUDIO_PATH = "data/record.wav"
+AUDIO_PATH = "data/record_cut.wav"
 VIDEO_PATH = "data/english_video_cut.mp4"
+# VIDEO_PATH = "data/input_img.jpeg"
+# VIDEO_PATH = "data/ez_english_cut2.mp4"
 OUTPUT_PATH = "output.mp4"
 
 

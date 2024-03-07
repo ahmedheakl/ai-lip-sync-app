@@ -1,13 +1,14 @@
-import numpy as np
-import cv2
+import platform
 import os
 import argparse
 import subprocess
+import numpy as np
+import cv2
 from tqdm import tqdm
-from wav2lip.audio import load_wav, melspectrogram
-from wav2lip.face_detection import FaceAlignment, LandmarksType
 import torch
-import platform
+
+from wav2lip.audio import load_wav, melspectrogram
+from wav2lip.face_detection.yolo_detector import YoloDetector
 
 parser = argparse.ArgumentParser(
     description="Inference code to lip-sync videos in the wild using Wav2Lip models"
@@ -107,7 +108,7 @@ def get_smoothened_boxes(boxes, T):
 
 
 def face_detect(images):
-    detector = FaceAlignment(LandmarksType._2D, flip_input=False, device=device)
+    detector = YoloDetector()
 
     batch_size = args.face_det_batch_size
 
@@ -116,9 +117,7 @@ def face_detect(images):
         try:
             for i in tqdm(range(0, len(images), batch_size)):
                 predictions.extend(
-                    detector.get_detections_for_batch(
-                        np.array(images[i : i + batch_size])
-                    )
+                    detector.detect_images(np.array(images[i : i + batch_size]))
                 )
         except RuntimeError:
             if batch_size == 1:
